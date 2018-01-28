@@ -17,6 +17,6 @@ WORKDIR /tmp
 RUN rm -rf udpxy* && \
   apk del build-base
 
-ENTRYPOINT ["/usr/local/bin/udpxy", "-T", "-B", "1M", "-p", "1234"]
+ENTRYPOINT ["/usr/local/bin/udpxy", "-B", "16M", "-p", "1234"]
 
 EXPOSE 1234
