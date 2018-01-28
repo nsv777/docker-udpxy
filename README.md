@@ -1,2 +1,3 @@
 # docker-udpxy
-udpxy container based on alpine:latest
+Based on alpine:latest
+Default port is 1234
