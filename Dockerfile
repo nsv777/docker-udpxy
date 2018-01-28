@@ -14,7 +14,7 @@ RUN tar xzf udpxy* && \
   make install
 
 WORKDIR /tmp
-RUN rm udpxy* && \
+RUN rm -rf udpxy* && \
   apk del build-base
 
 ENTRYPOINT ["/usr/local/bin/udpxy", "-T", "-B", "1M", "-p", "1234"]
