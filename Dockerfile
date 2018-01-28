@@ -1,12 +1,20 @@
-FROM ubuntu:14.04.2
-MAINTAINER Stefan Hageneder <stefan.hageneder@dorftv.at>
-ENV DEBIAN_FRONTEND noninteractive
-ENV HOME /tmp
+FROM alpine
+
 WORKDIR /tmp
-RUN apt-get update && apt-get install -y wget make gcc
-RUN wget http://www.udpxy.com/download/1_23/udpxy.1.0.23-9-prod.tar.gz
-RUN tar -xzvf udpxy.1.0.23-9-prod.tar.gz
-RUN cd udpxy-1.0.23-9 && make && make install
 
-CMD ["/usr/local/bin/udpxy", "-T", "-p", "4022"]
+ENV source_url http://www.udpxy.com/download/udpxy/udpxy-src.tar.gz
 
+RUN apk update && \
+  apk add build-base
+RUN wget ${source_tarball}
+RUN tar xzf udpxy* && \
+  rm -f *.tar.gz && \
+  cd udpxy* && \
+  make && \
+  make install
+
+WORKDIR /tmp
+RUN rm udpxy* && \
+  apk del build-base
+
+ENTRYPOINT ["/usr/local/bin/udpxy", "-T", "-B", "1M", "-p", "1234"]
